@@ -17,7 +17,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, PlusIcon } from "lucide-react"
+import { ChevronRight, ChevronsUpDownIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 
@@ -25,7 +25,7 @@ export function Switcher({
     menu
 }: any) {
     const router = useRouter();
-    
+
     const { isMobile } = useSidebar()
 
     return (
@@ -40,22 +40,25 @@ export function Switcher({
                             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                                 {menu.icon}
                             </div>
+
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">{menu.name}</span>
                             </div>
+
+                            <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-90" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                         align="start"
                         side={isMobile ? "bottom" : "right"}
-                        sideOffset={6}
+                        sideOffset={10}
                     >
                         {menu.children.map((m: any, index: any) => (
                             <DropdownMenuItem
                                 key={m.name}
                                 className="gap-2 p-2"
-                                 onSelect={() => router.push(m.url)}
+                                onSelect={() => router.push(m.url)}
                             >
                                 <div className="flex size-6 items-center justify-center rounded-md border">
                                     {m.icon}
