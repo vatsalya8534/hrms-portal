@@ -202,7 +202,7 @@ const menu = [
       },
       {
         name: "Dept & org chart",
-        url: "#",
+        url: "/department",
         icon: (
           <Building2
           />
