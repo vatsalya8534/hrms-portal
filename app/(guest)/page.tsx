@@ -1,10 +1,7 @@
-"use client";
 
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import  LoginForm  from "./login-form";
 
-export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
+export default async function LoginPage() {
 
     return (
         <div className="min-h-screen grid lg:grid-cols-2">
@@ -102,46 +99,8 @@ export default function LoginPage() {
                         </p>
 
                         {/* FORM */}
-                        <form className="space-y-4">
-
-                            <div>
-                                <label className="text-sm text-gray-700">Username</label>
-                                <input
-                                    type="text"
-                                    placeholder="admin"
-                                    className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 border outline-none"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="text-sm text-gray-700">Password</label>
-
-                                <div className="relative mt-1">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="••••••••"
-                                        className="w-full px-4 py-2 rounded-lg bg-gray-100 border outline-none pr-10"
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-                                    >
-                                        {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-                                Sign In
-                            </button>
-                        </form>
+                        <LoginForm />
                     </div>
-
-                    <p className="text-xs text-gray-400 mt-6 text-center">
-                        Protected access for authorized users only.
-                    </p>
                 </div>
             </div>
         </div>

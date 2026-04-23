@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Inter } from "next/font/google";
+import { Providers } from "@/lib/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,13 @@ export default function RootLayout({
       className={`${inter.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-         <TooltipProvider>{children}</TooltipProvider>
+        <TooltipProvider>
+          <Providers>
+            <div className="flex">
+              <main className="flex-1">{children}</main>
+            </div>
+          </Providers>
+        </TooltipProvider>
       </body>
     </html>
   );

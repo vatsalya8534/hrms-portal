@@ -20,6 +20,8 @@ import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIco
 import { Switcher } from "./switcher"
 import Link from "next/link"
 import Image from "next/image"
+import { useDispatch } from "react-redux";
+import { userLoginRequest } from "@/store/actions/user-actions";
 
 // This is sample data.
 const data = {
@@ -277,7 +279,14 @@ const menu = [
 
 ]
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: any }) {
+
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(userLoginRequest(user))
+  }, [])
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -314,7 +323,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

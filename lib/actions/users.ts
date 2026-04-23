@@ -129,11 +129,12 @@ export async function deleteUser(id: any) {
 }
 
 export async function loginFormUser(prevState: unknown, formData: FormData) {
+  
   const result = loginFormSchema.safeParse({
     username: formData.get("username"),
     password: formData.get("password"),
   });
-
+  
   // Validation failed
   if (!result.success) {
     return {
@@ -145,8 +146,8 @@ export async function loginFormUser(prevState: unknown, formData: FormData) {
   const user = result.data;
 
   try {
-    await signIn("credentials", user);
-
+    await signIn("credentials", {...user, redirect: false });
+    
     return {
       success: true,
       message: "Login successfully",

@@ -1,0 +1,97 @@
+"use client";
+import { loginFormUser } from '@/lib/actions/users';
+import { Eye, EyeOff } from 'lucide-react';
+import { redirect } from 'next/navigation';
+import React, { SubmitEvent, useActionState, useEffect, useState } from 'react'
+
+type LoginActionState = {
+    success: boolean;
+    message: string;
+} | null;
+
+const LoginForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [data, action] = useActionState<LoginActionState, FormData>(
+        loginFormUser,
+        null
+    );
+
+    const [error, setError] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = (event: SubmitEvent) => {
+        const user = username.trim();
+        const pass = password.trim();
+
+        if (!user || !pass) {
+            event.preventDefault();
+            setError("Username and password are required.");
+            return;
+        }
+
+        setError("");
+    };
+
+    useEffect(() => {
+        if (data?.success === false && data.message) {
+            setError(data.message);
+        }
+
+        if(data?.success) {
+            redirect("/dashboard");
+        }
+
+    }, [data]);
+
+    
+
+    return (
+        <form action={action}  className="space-y-4" onSubmit={handleSubmit}>
+            {error && (
+                <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-sm text-red-600">
+                    {error}
+                </p>
+            )}
+
+            <div>
+                <label className="text-sm text-gray-700">Username</label>
+                <input
+                    type="text"
+                    placeholder="admin"
+                    name='username'
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 border outline-none"
+                />
+            </div>
+
+            <div>
+                <label className="text-sm text-gray-700">Password</label>
+
+                <div className="relative mt-1">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        name='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg bg-gray-100 border outline-none pr-10"
+                    />
+
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                    >
+                        {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                    </button>
+                </div>
+            </div>
+
+            <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Sign In
+            </button>
+        </form>
+    )
+}
+
+export default LoginForm

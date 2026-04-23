@@ -1,20 +1,25 @@
+import { auth } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { ChevronDown } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+    // ✅ AUTH CHECK
+    const session: any = await auth();
+
+    if (!session || !session.user || !session.user.email) {
+        redirect("/");
+    }
+
     return (
         <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar user={session.user} />
             <SidebarInset>
                 {/* ✅ TOP HEADER */}
                 <div className="sticky top-0 z-50 bg-white">

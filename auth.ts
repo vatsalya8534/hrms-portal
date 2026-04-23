@@ -22,6 +22,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
+                console.log(credentials);
+                
+                
                 if (credentials == null) return null;
 
                 // find user in database
