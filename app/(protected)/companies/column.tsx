@@ -1,11 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EmployeeDocument } from "@/types";
+import { Company } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditIcon, Trash } from "lucide-react";
 import Link from "next/link";
 
-export const getEmployeeDocumentColumns = ({
+export const getCompanyColumns = ({
   canEdit,
   canDelete,
   onDelete,
@@ -13,28 +13,29 @@ export const getEmployeeDocumentColumns = ({
   canEdit: boolean;
   canDelete: boolean;
   onDelete: (id: string) => void;
-}): ColumnDef<EmployeeDocument>[] => {
-  const columns: ColumnDef<EmployeeDocument>[] = [
+}): ColumnDef<Company>[] => {
+  const columns: ColumnDef<Company>[] = [
     {
-      accessorKey: "employeeName",
-      header: "Employee",
+      accessorKey: "companyName",
+      header: "Company Name",
     },
     {
-      accessorKey: "employeeCode",
-      header: "Employee ID",
+      accessorKey: "companyCode",
+      header: "Company Code",
     },
     {
-      accessorKey: "experienceType",
-      header: "Experience Type",
-      cell: ({ row }) => row.original.experienceType.replaceAll("_", " "),
+      accessorKey: "email",
+      header: "Email",
+      cell: ({ row }) => row.original.email || "-",
     },
     {
-      accessorKey: "aadhaarNumber",
-      header: "Aadhaar Number",
+      accessorKey: "phone",
+      header: "Phone",
     },
     {
-      accessorKey: "panNumber",
-      header: "PAN Number",
+      accessorKey: "website",
+      header: "Website",
+      cell: ({ row }) => row.original.website || "-",
     },
     {
       accessorKey: "status",
@@ -63,7 +64,7 @@ export const getEmployeeDocumentColumns = ({
                 size="icon"
                 className="bg-orange-500 hover:bg-orange-600"
               >
-                <Link href={`/employee-documents/edit/${id}`}>
+                <Link href={`/companies/edit/${id}`}>
                   <EditIcon size={16} />
                 </Link>
               </Button>

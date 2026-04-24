@@ -133,3 +133,29 @@ export const employeeProfileDefaultValues = {
   remark: "",
   status: Status.ACTIVE,
 };
+
+/* ---------------- COMPANY ---------------- */
+export const companyDefaultValues = {
+  companyName: "",
+  companyCode: "",
+  email: "",
+  phone: "",
+  website: "",
+  address: "",
+  remark: "",
+  status: Status.ACTIVE,
+};
+
+/* ---------------- EMPLOYER ---------------- */
+export const employerDefaultValues = {
+  companyId: "",
+  employerName: "",
+  employerCode: "",
+  email: "",
+  phone: "",
+  password: "",
+  designation: "",
+  address: "",
+  remark: "",
+  status: Status.ACTIVE,
+};

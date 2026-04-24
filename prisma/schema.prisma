@@ -57,6 +57,40 @@ model User {
   employeeProfile     EmployeeProfile?
 }
 
+model Company {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyName String     @unique
+  companyCode String     @unique
+  email       String?    @unique
+  phone       String
+  website     String?
+  address     String?
+  remark      String?
+  status      Status     @default(ACTIVE)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  employers Employer[]
+}
+
+model Employer {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String   @db.Uuid
+  employerName String
+  employerCode String   @unique
+  email        String   @unique
+  phone        String
+  password     String
+  designation  String?
+  address      String?
+  remark       String?
+  status       Status   @default(ACTIVE)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
 model JobRole {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String   @unique

@@ -1,11 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EmployeeDocument } from "@/types";
+import { Employer } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditIcon, Trash } from "lucide-react";
 import Link from "next/link";
 
-export const getEmployeeDocumentColumns = ({
+export const getEmployerColumns = ({
   canEdit,
   canDelete,
   onDelete,
@@ -13,28 +13,33 @@ export const getEmployeeDocumentColumns = ({
   canEdit: boolean;
   canDelete: boolean;
   onDelete: (id: string) => void;
-}): ColumnDef<EmployeeDocument>[] => {
-  const columns: ColumnDef<EmployeeDocument>[] = [
+}): ColumnDef<Employer>[] => {
+  const columns: ColumnDef<Employer>[] = [
     {
-      accessorKey: "employeeName",
-      header: "Employee",
+      accessorKey: "employerName",
+      header: "Employer Name",
     },
     {
-      accessorKey: "employeeCode",
-      header: "Employee ID",
+      accessorKey: "employerCode",
+      header: "Employer Code",
     },
     {
-      accessorKey: "experienceType",
-      header: "Experience Type",
-      cell: ({ row }) => row.original.experienceType.replaceAll("_", " "),
+      accessorKey: "companyName",
+      header: "Company",
+      cell: ({ row }) => row.original.companyName || "-",
     },
     {
-      accessorKey: "aadhaarNumber",
-      header: "Aadhaar Number",
+      accessorKey: "email",
+      header: "Email",
     },
     {
-      accessorKey: "panNumber",
-      header: "PAN Number",
+      accessorKey: "phone",
+      header: "Phone",
+    },
+    {
+      accessorKey: "designation",
+      header: "Designation",
+      cell: ({ row }) => row.original.designation || "-",
     },
     {
       accessorKey: "status",
@@ -63,7 +68,7 @@ export const getEmployeeDocumentColumns = ({
                 size="icon"
                 className="bg-orange-500 hover:bg-orange-600"
               >
-                <Link href={`/employee-documents/edit/${id}`}>
+                <Link href={`/employers/edit/${id}`}>
                   <EditIcon size={16} />
                 </Link>
               </Button>
