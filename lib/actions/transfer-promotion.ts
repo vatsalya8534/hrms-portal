@@ -1,6 +1,6 @@
 "use server";
 
-import { MovementType, Status } from "@/app/generated/prisma/client";
+import { MovementType, Status } from "@prisma/client";
 import { TransferPromotion } from "@/types";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../prisma";

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { redirect } from "next/navigation";
 import { getConfiguration } from "@/lib/actions/configuration";
+import { getAccessibleRoutes } from "@/lib/rbac";
 
 export default async function ProtectedLayout({
   children,
@@ -20,6 +21,7 @@ export default async function ProtectedLayout({
   }
 
   const config = await getConfiguration();
+  const accessibleRoutes = await getAccessibleRoutes();
 
   const sidebarUser = {
     name:
@@ -37,6 +39,7 @@ export default async function ProtectedLayout({
         user={sidebarUser}
         role={session.user.role}
         config={config || undefined}
+        accessibleRoutes={accessibleRoutes}
       />
 
       <SidebarInset>

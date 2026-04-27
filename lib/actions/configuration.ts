@@ -41,8 +41,21 @@ async function saveUpload(file: File) {
 }
 
 // Get configuration
-export async function getConfiguration() {
-  return await prisma.configuration.findFirst({});
+export async function getConfiguration(): Promise<Configuration | null> {
+  const configuration = await prisma.configuration.findFirst({});
+
+  if (!configuration) {
+    return null;
+  }
+
+  return {
+    id: configuration.id,
+    name: configuration.name ?? undefined,
+    logo: configuration.logo ?? undefined,
+    favicon: configuration.favicon ?? undefined,
+    email: configuration.email ?? undefined,
+    password: configuration.password ?? undefined,
+  };
 }
 
 // Create or Update configuration

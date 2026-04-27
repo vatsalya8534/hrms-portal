@@ -5,7 +5,9 @@ import {
   Status,
   ExperienceType,
   MovementType,
+  Status,
 } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 
 async function main() {
   console.log("🌱 Seeding started...");
@@ -84,6 +86,7 @@ async function main() {
       route: "/configuration",
     },
   ];
+
 
   const createdModules = [];
 

@@ -4,7 +4,7 @@ import {
   Prisma,
   ExperienceType,
   Status,
-} from "@/app/generated/prisma/client";
+} from "@prisma/client";
 import { EmployeeDocument } from "@/types";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../prisma";

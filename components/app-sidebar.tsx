@@ -116,6 +116,7 @@ const menu: MenuGroup[] = [
       { name: "Employer", url: "/employers", icon: <UserCog size={18} /> },
     ],
   },
+  
   {
     name: "Configuration",
     icon: <Settings size={18} />,
@@ -143,15 +144,52 @@ function getMenuByRole(role?: SidebarRole): MenuGroup[] {
   return menu;
 }
 
+function filterMenuByAccess(
+  menuGroups: MenuGroup[],
+  role: SidebarRole,
+  accessibleRoutes: string[]
+) {
+  if (role?.toLowerCase() === "employee") {
+    return menuGroups;
+  }
+
+  const routeSet = new Set(accessibleRoutes);
+
+  return menuGroups
+    .map((group) => {
+      if (group.children?.length) {
+        const children = group.children.filter((item) => routeSet.has(item.url));
+
+        if (!children.length) {
+          return null;
+        }
+
+        return {
+          ...group,
+          children,
+        };
+      }
+
+      if (group.url && routeSet.has(group.url)) {
+        return group;
+      }
+
+      return null;
+    })
+    .filter((group): group is MenuGroup => !!group);
+}
+
 export function AppSidebar({
   user,
   role,
   config,
+  accessibleRoutes = [],
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   user?: SidebarUser;
   role?: SidebarRole;
   config?: AppConfig;
+  accessibleRoutes?: string[];
 }) {
   const navUser = {
     name: user?.name || "User",
@@ -159,7 +197,7 @@ export function AppSidebar({
     avatar: user?.avatar || "",
   };
 
-  const filteredMenu = getMenuByRole(role);
+  const filteredMenu = filterMenuByAccess(getMenuByRole(role), role, accessibleRoutes);
 
   const homeHref =
     role?.toLowerCase() === "employee"

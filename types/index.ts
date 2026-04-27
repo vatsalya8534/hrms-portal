@@ -50,3 +50,5 @@ export type EmployeeProfile = z.infer<typeof employeeProfileSchema> & {
   jobRoleName?: string;
   workLocationName?: string;
 };
+
+export type Configuration = z.infer<typeof configurationSchema>
