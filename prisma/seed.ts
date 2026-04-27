@@ -4,7 +4,7 @@ import {
   ExperienceType,
   MovementType,
   Status,
-} from "../app/generated/prisma";
+} from "@prisma/client";
 import { prisma } from "../lib/prisma";
 
 async function main() {
@@ -48,14 +48,43 @@ async function main() {
   // Modules
   const modules = [
     { name: "Dashboard", description: "Dashboard Module", route: "/dashboard" },
-    { name: "Users", description: "Users Module", route: "/users" },
-    { name: "Employees", description: "Employee Module", route: "/employees" },
-    { name: "Companies", description: "Company Module", route: "/companies" },
-    { name: "Employers", description: "Employer Module", route: "/employers" },
-    { name: "Departments", description: "Department Module", route: "/departments" },
-    { name: "Job Roles", description: "Job Roles Module", route: "/job-roles" },
-    { name: "Locations", description: "Work Locations Module", route: "/locations" },
+    { name: "User", description: "Users Module", route: "/users" },
+    { name: "Role", description: "Roles Module", route: "/roles" },
+    { name: "Module", description: "Module Setup", route: "/module" },
+    {
+      name: "Employee Profiles",
+      description: "Employee Profiles Module",
+      route: "/employee-profiles",
+    },
+    {
+      name: "Department",
+      description: "Department Module",
+      route: "/department",
+    },
+    {
+      name: "Work Location",
+      description: "Work Location Module",
+      route: "/work-location",
+    },
+    {
+      name: "Employee Documents",
+      description: "Employee Documents Module",
+      route: "/employee-documents",
+    },
+    {
+      name: "Transfer Promotion",
+      description: "Transfer Promotion Module",
+      route: "/transfer-promotion",
+    },
+    { name: "Company", description: "Company Module", route: "/companies" },
+    { name: "Employer", description: "Employer Module", route: "/employers" },
+    {
+      name: "Configuration",
+      description: "Configuration Module",
+      route: "/configuration",
+    },
   ];
+
 
   const createdModules = [];
 

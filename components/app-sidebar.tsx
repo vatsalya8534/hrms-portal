@@ -10,6 +10,7 @@ import {
   Gauge,
   IdCard,
   LayoutGrid,
+  Settings,
   User2Icon,
   UserCog,
   Users2Icon,
@@ -45,6 +46,7 @@ type MenuItem = {
 type MenuGroup = {
   name: string
   icon: React.ReactNode
+  url?: string
   children: MenuItem[]
 }
 
@@ -132,6 +134,12 @@ const menu: MenuGroup[] = [
         icon: <UserCog />,
       },
     ],
+  },
+  {
+    name: "Configuration",
+    icon: <Settings size={18} />,
+    url: "/configuration",
+    children: [],
   },
 ]
 

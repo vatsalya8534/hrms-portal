@@ -1,6 +1,6 @@
 "use server";
 
-import { Status } from "@/app/generated/prisma/client";
+import { Status } from "@prisma/client";
 import { EmployeeProfile } from "@/types";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
@@ -206,6 +206,20 @@ export async function getEmployeeProfileSelectOptions() {
   }
 }
 
+export interface EmployeeFilters {
+  employeeId?: string;
+  employeeName?: string;
+  email?: string;
+  phone?: string;
+  companyId?: string;
+  departmentId?: string;
+  jobRoleId?: string;
+  workLocationId?: string;
+  status?: string;
+  joiningDateFrom?: string;
+  joiningDateTo?: string;
+}
+
 export async function getEmployeeProfiles(): Promise<EmployeeProfile[]> {
   try {
     const records = await prisma.employeeProfile.findMany({
@@ -215,6 +229,86 @@ export async function getEmployeeProfiles(): Promise<EmployeeProfile[]> {
 
     return records.map(mapEmployeeProfile);
   } catch {
+    return [];
+  }
+}
+
+export async function getFilteredEmployeeProfiles(
+  filters: EmployeeFilters = {},
+): Promise<EmployeeProfile[]> {
+  try {
+    const where: any = {};
+
+    if (filters.employeeId) {
+      where.employeeCode = {
+        contains: filters.employeeId,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.employeeName) {
+      where.employeeName = {
+        contains: filters.employeeName,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.email) {
+      where.employee = {
+        email: {
+          contains: filters.email,
+          mode: "insensitive",
+        },
+      };
+    }
+
+    if (filters.phone) {
+      where.phone = {
+        contains: filters.phone,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.companyId) {
+      where.companyId = filters.companyId;
+    }
+
+    if (filters.departmentId) {
+      where.departmentId = filters.departmentId;
+    }
+
+    if (filters.jobRoleId) {
+      where.jobRoleId = filters.jobRoleId;
+    }
+
+    if (filters.workLocationId) {
+      where.workLocationId = filters.workLocationId;
+    }
+
+    if (filters.status && filters.status !== "ALL") {
+      where.status = filters.status;
+    }
+
+    if (filters.joiningDateFrom || filters.joiningDateTo) {
+      where.joiningDate = {};
+
+      if (filters.joiningDateFrom) {
+        where.joiningDate.gte = new Date(filters.joiningDateFrom);
+      }
+      if (filters.joiningDateTo) {
+        where.joiningDate.lte = new Date(filters.joiningDateTo);
+      }
+    }
+
+    const records = await prisma.employeeProfile.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      include: employeeProfileInclude,
+    });
+
+    return records.map(mapEmployeeProfile);
+  } catch (error) {
+    console.error("Error fetching filtered employee profiles:", error);
     return [];
   }
 }

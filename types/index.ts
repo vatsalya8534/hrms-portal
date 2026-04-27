@@ -1,6 +1,7 @@
 import z from "zod";
 import {
   companySchema,
+  configurationSchema,
   departmentSchema,
   employeeDocumentSchema,
   employeeProfileSchema,
@@ -47,3 +48,5 @@ export type EmployeeProfile = z.infer<typeof employeeProfileSchema> & {
   jobRoleName?: string;
   workLocationName?: string;
 };
+
+export type Configuration = z.infer<typeof configurationSchema>

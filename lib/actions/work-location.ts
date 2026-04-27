@@ -1,6 +1,6 @@
 "use server";
 
-import { Status } from "@/app/generated/prisma/client";
+import { Status } from "@prisma/client";
 import { WorkLocation } from "@/types";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../prisma";

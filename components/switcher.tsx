@@ -41,9 +41,18 @@ export function Switcher({
                                 {menu.icon}
                             </div>
 
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{menu.name}</span>
-                            </div>
+                            {
+                                menu.url ? (
+                                    <Link href={menu.url} className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-medium">{menu.name}</span>
+                                    </Link>
+                                ) : (
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-medium">{menu.name}</span>
+                                    </div>
+                                )
+                            }
+
 
                             <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-90" />
                         </SidebarMenuButton>
@@ -70,7 +79,7 @@ export function Switcher({
                         <DropdownMenuSeparator />
                     </DropdownMenuContent>
                 </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
+            </SidebarMenuItem >
+        </SidebarMenu >
     )
 }

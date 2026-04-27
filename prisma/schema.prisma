@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -53,7 +48,7 @@ model User {
   roleId    String   @db.Uuid
   role      Role     @relation(fields: [roleId], references: [id])
 
-  employeeProfile     EmployeeProfile?
+  employeeProfile EmployeeProfile?
 }
 
 model Company {
@@ -118,21 +113,21 @@ model Department {
 }
 
 model WorkLocation {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String   @unique
-  code        String   @unique
-  address     String
-  city        String
-  state       String
-  country     String
-  postalCode  String?
-  remark      String?
-  status      Status   @default(ACTIVE)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String   @unique
+  code       String   @unique
+  address    String
+  city       String
+  state      String
+  country    String
+  postalCode String?
+  remark     String?
+  status     Status   @default(ACTIVE)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  transfersFrom TransferPromotion[] @relation("TransferFromLocation")
-  transfersTo   TransferPromotion[] @relation("TransferToLocation")
+  transfersFrom    TransferPromotion[] @relation("TransferFromLocation")
+  transfersTo      TransferPromotion[] @relation("TransferToLocation")
   employeeProfiles EmployeeProfile[]
 }
 
@@ -152,54 +147,54 @@ model TransferPromotion {
   updatedAt          DateTime     @updatedAt
 
   employee     EmployeeProfile @relation(fields: [employeeId], references: [id])
-  fromLocation WorkLocation? @relation("TransferFromLocation", fields: [fromLocationId], references: [id])
-  toLocation   WorkLocation? @relation("TransferToLocation", fields: [toLocationId], references: [id])
+  fromLocation WorkLocation?   @relation("TransferFromLocation", fields: [fromLocationId], references: [id])
+  toLocation   WorkLocation?   @relation("TransferToLocation", fields: [toLocationId], references: [id])
 }
 
 model EmployeeDocument {
-  id                 String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  employeeId         String         @db.Uuid
-  employeeCode       String
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  employeeId   String @db.Uuid
+  employeeCode String
 
   // ---------------- DOCUMENTS ----------------
-  aadhaarNumber      String
-  aadhaarFileUrl     String?
-  panNumber          String
-  panFileUrl         String?
+  aadhaarNumber  String
+  aadhaarFileUrl String?
+  panNumber      String
+  panFileUrl     String?
 
   // ---------------- EDUCATION (DYNAMIC CARDS) ----------------
-  educationEntries   Json?
+  educationEntries Json?
 
   // ---------------- EXPERIENCE ----------------
-  experienceType     ExperienceType @default(FRESHER)
-  experienceEntries  Json?
+  experienceType    ExperienceType @default(FRESHER)
+  experienceEntries Json?
 
   // ---------------- COMMON ----------------
-  remark             String?
-  status             Status         @default(ACTIVE)
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  remark    String?
+  status    Status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   employee EmployeeProfile @relation(fields: [employeeId], references: [id])
 }
 
 model EmployeeProfile {
-  id                    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  employeeId            String?  @unique @db.Uuid
-  employeeName          String
-  employeeCode          String   @unique
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  employeeId   String? @unique @db.Uuid
+  employeeName String
+  employeeCode String  @unique
 
-  companyId             String?  @db.Uuid
+  companyId String? @db.Uuid
 
-  phone                 String
-  alternatePhone        String?
-  gender                String?
-  dateOfBirth           DateTime?
-  joiningDate           DateTime
+  phone          String
+  alternatePhone String?
+  gender         String?
+  dateOfBirth    DateTime?
+  joiningDate    DateTime
 
-  departmentId          String?  @db.Uuid
-  jobRoleId             String?  @db.Uuid
-  workLocationId        String?  @db.Uuid
+  departmentId   String? @db.Uuid
+  jobRoleId      String? @db.Uuid
+  workLocationId String? @db.Uuid
 
   address               String?
   emergencyContactName  String?
@@ -209,13 +204,13 @@ model EmployeeProfile {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
-  employee         User?         @relation(fields: [employeeId], references: [id], onDelete: SetNull)
-  company          Company?      @relation(fields: [companyId], references: [id])
-  department       Department?   @relation(fields: [departmentId], references: [id])
-  jobRole          JobRole?      @relation(fields: [jobRoleId], references: [id])
-  workLocation     WorkLocation? @relation(fields: [workLocationId], references: [id])
+  employee     User?         @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  company      Company?      @relation(fields: [companyId], references: [id])
+  department   Department?   @relation(fields: [departmentId], references: [id])
+  jobRole      JobRole?      @relation(fields: [jobRoleId], references: [id])
+  workLocation WorkLocation? @relation(fields: [workLocationId], references: [id])
 
-  employeeDocuments EmployeeDocument[]
+  employeeDocuments  EmployeeDocument[]
   transferPromotions TransferPromotion[]
 }
 
@@ -246,4 +241,13 @@ model RoleModule {
   module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, moduleId])
+}
+
+model Configuration {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name     String?
+  logo     String?
+  favicon  String?
+  email    String?
+  password String?
 }

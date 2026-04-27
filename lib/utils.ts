@@ -5,6 +5,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function formatDate(date: string | Date | null | undefined): string {
+  if (!date) return "-";
+  try {
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+    if (isNaN(dateObj.getTime())) return "-";
+    return dateObj.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return "-";
+  }
+}
 
 export function formatError(error: any) {
   try {
