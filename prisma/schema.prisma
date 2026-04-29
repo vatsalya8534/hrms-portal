@@ -71,7 +71,7 @@ model User {
   role      Role     @relation(fields: [roleId], references: [id])
 
   employeeProfile EmployeeProfile?
-  projects   Project[]
+  projects        Project[]
 }
 
 model Company {
@@ -306,6 +306,9 @@ model ProjectMember {
 
   assignedAt DateTime @default(now())
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   project  Project         @relation(fields: [projectId], references: [id])
   employee EmployeeProfile @relation(fields: [employeeId], references: [id])
 
@@ -314,7 +317,7 @@ model ProjectMember {
 
 model Task {
   id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  projectId    String @db.Uuid
+  projectId    String  @db.Uuid
   assignedToId String? @db.Uuid
 
   title       String
@@ -340,17 +343,17 @@ model Task {
 }
 
 model TaskComment {
-  id          String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  taskId      String @db.Uuid
-  employeeId  String @db.Uuid
+  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  taskId     String @db.Uuid
+  employeeId String @db.Uuid
 
-  comment     String
+  comment String
 
-  task        Task              @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
-  employee    EmployeeProfile   @relation(fields: [employeeId], references: [id])
+  employee EmployeeProfile @relation(fields: [employeeId], references: [id])
 
-  createdAt   DateTime          @default(now())
+  createdAt DateTime @default(now())
 
   @@index([taskId])
   @@index([employeeId])

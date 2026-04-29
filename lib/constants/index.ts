@@ -167,3 +167,9 @@ export const projectDefaultValues = {
   status: ProjectStatus.ACTIVE,
   createdById: "",
 }
+
+export const projectMemberDefaultValues = {
+  projectId: "",
+  employeeId: "",
+  assignedAt: "",
+}
